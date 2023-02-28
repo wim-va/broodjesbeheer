@@ -13,8 +13,6 @@ class Cursist
         $this->email = $email;
         $this->wachtwoord = $wachtwoord;
     }
-
-
     // setters
     public function setId(
         int $id

@@ -7,7 +7,6 @@ class Bestelling
     private int $broodjeId;
     private int $cursistId;
     private string $datum;
-
     // construct
     public function __construct(int $id, int $broodjeId, int $cursistId, string $datum,)
     {
