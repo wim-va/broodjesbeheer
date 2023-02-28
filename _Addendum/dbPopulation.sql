@@ -531,4 +531,9 @@ ALTER TABLE bestelling
 ADD CONSTRAINT FK_CursistBestelling
 FOREIGN KEY bestelling(cursistId) REFERENCES cursist(cursistId);
 
-CREATE USER 'broodjeszaak'@'localhost' IDENTIFIED BY '%7JLEIOYhjKO4g^PxK%8uX8f';
+-- CREATE USER 'broodjeszaak'@'localhost' IDENTIFIED BY '%7JLEIOYhjKO4g^PxK%8uX8f';
+
+CREATE USER 'broodjeszaak'@'127.0.0.1' IDENTIFIED BY '41ryOuJaT4THRfBwx8X5nudH';
+
+# SELECT * FROM `user` WHERE 1
+/*  */CREATE USER 'broodjeszaak'@'localhost' IDENTIFIED BY '41ryOuJaT4THRfBwx8X5nudH';

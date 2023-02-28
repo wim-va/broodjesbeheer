@@ -68,7 +68,6 @@ class CursistDAO
         $cursistId = !empty($resultaat) ? $resultaat["cursistId"] : 0;
         return $cursistId;
     }
-
     public function getCursistOpEmail(string $email): ?Cursist
     {
         $dbh = new PDO(DBConfig::$DB_CONN,            DBConfig::$DB_USER,            DBConfig::$DB_PASS);
@@ -87,30 +86,6 @@ class CursistDAO
         }
         return null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // update
     public function updateWachtwoord(int $cursistId): void
     {

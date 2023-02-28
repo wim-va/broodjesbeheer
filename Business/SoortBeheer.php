@@ -6,17 +6,17 @@ class SoortBeheer
 {
     // create
     // read
-    public function haalAlleBeleg()
+    public function haalAlleSoorten(): array
     {
-        $belegDAO = new BelegDAO();
-        $alleBeleg = $belegDAO->getAllBelegs();
-        return $alleBeleg;
+        $soortDAO = new SoortDAO();
+        $soorten = $soortDAO->getAllSoorten();
+        return $soorten;
     }
-    public function haalBelegOpId(int $id)
+    public function haalSoortOpId(int $id): ?int
     {
-        $belegDAO = new BelegDAO();
-        $beleg = $belegDAO->getBelegOpId($id);
-        return $beleg;
+        $soortDAO = new SoortDAO();
+        $soort  = $soortDAO->getSoortOpId($id);
+        return $soort;
     }
     // update
     // delete

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 require_once("Data/SausDAO.php.php");
-
 class SausBeheer
 {
     // create

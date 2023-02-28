@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 require_once("Data/BestellingDAO.php");
-
 class BestellingBeheer
 {
     // create
@@ -36,18 +35,13 @@ class BestellingBeheer
         $bestellingen = $bestellingDAO->getBestellingenOpDatum($datum);
         return $bestellingen;
     }
-
     // update
     // delete
-
-
-
     public function verwijderBestelling(int $id): void
     {
         $bestellingDAO = new BestellingDAO();
         $bestellingDAO->verwijderBestellingOpId($id);
     }
-
     public function verwijderBestellingenCursist(int $cursistId): void
     {
         $bestellingDAO = new BestellingDAO();

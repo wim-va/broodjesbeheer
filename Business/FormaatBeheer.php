@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 require_once("Data/FormaatDAO.php");
-
-
 class FormaatBeheer
 {
     // create
