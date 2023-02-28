@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+require_once("Data/BelegDAO.php");
+
 class BelegBeheer
 {
     // create
