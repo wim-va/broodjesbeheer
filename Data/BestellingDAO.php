@@ -6,7 +6,7 @@ require_once("DBConfig.php");
 class BestellingDAO
 {
     // create
-    public function maakBestelling(int $broodjeId, int $cursistId): void
+    public function plaatsNieuweBestelling(int $broodjeId, int $cursistId): void
     {
         $bestellingDatum = $this->getDate();
         $dbh = new PDO(DBConfig::$DB_CONN, DBConfig::$DB_USER, DBConfig::$DB_PASS);
