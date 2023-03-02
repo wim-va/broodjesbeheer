@@ -1,0 +1,129 @@
+body {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+body header .header-nav {
+  margin: 50px 0 0;
+  background-color: #6868fa;
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px;
+  line-height: 2rem;
+}
+body header .header-nav--links__link {
+  color: #eee;
+}
+body header .header-nav--rechts__link {
+  color: #eee;
+}
+body header .header-nav__link {
+  line-height: 2rem;
+  text-decoration: none;
+  color: #eee;
+  padding: 20px 5px;
+  font-weight: 600;
+}
+body header .header-nav__link:hover {
+  color: #6868fa;
+  background-color: #eee;
+}
+body main {
+  background-color: rgb(247, 247, 247);
+  background-color: rgb(240, 240, 240);
+  padding-top: 40px;
+  height: calc(100vh - 150px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+body main .main-content {
+  width: 80%;
+}
+body main .main-content h1 {
+  color: #6868fa;
+  background-color: #e5e7e6;
+  font-size: 3rem;
+  padding: 20px 0 5px 5%;
+}
+body main .main-content .button--extra {
+  position: relative;
+  right: 0;
+  left: 0;
+  margin-right: 20px;
+  float: right;
+  top: -55px;
+  cursor: pointer;
+}
+body main .main-content .main-area__form {
+  clear: both;
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  background-color: #6868fa;
+  position: relative;
+}
+body main .main-content .main-area__form--bestelform {
+  top: -36px;
+}
+body main .main-content .main-area__form .email,
+body main .main-content .main-area__form .password {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 60%;
+}
+body main .main-content .main-area__form .email label,
+body main .main-content .main-area__form .password label {
+  font-weight: 41.5rem;
+  vertical-align: baseline;
+  line-height: 1rem;
+  font-weight: 700;
+  color: whitesmoke;
+  line-height: 1.3rem;
+}
+body main .main-content .main-area__form .email input,
+body main .main-content .main-area__form .password input {
+  width: 200px;
+  margin-left: 15px;
+  background-color: rgb(202, 202, 202);
+}
+body main .main-content table {
+  width: 100%;
+  margin: 20px 0;
+}
+body main .main-content table th {
+  font-weight: 700;
+  padding: 15px;
+  border: 1px solid #6868fa;
+  border: 1px solid #e5e7e6;
+  border: 1px solid #59344f;
+  border: 1px solid #022b3a;
+  border: 1px solid #0e7c7b;
+}
+body main .main-content table tbody tr {
+  text-align: center;
+}
+body main .main-content table tbody tr:nth-of-type(n + 1) {
+  background-color: aliceblue;
+}
+body main .main-content table tbody tr:nth-of-type(even) {
+  background-color: aquamarine;
+}
+body main .main-content table tbody tr td {
+  padding: 5px;
+}
+body main .main-content button {
+  width: 150px;
+  margin: 0 auto;
+  color: #6868fa;
+  font-weight: 700;
+  border: 1px solid rgba(104, 104, 250, 0.862745098);
+  border-radius: 1px;
+  padding: 10px 15px;
+}/*# sourceMappingURL=styles.css.map */
