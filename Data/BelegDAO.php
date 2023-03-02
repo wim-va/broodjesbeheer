@@ -6,6 +6,17 @@ require_once("DBConfig.php");
 class BelegDAO
 {
     // create
+    public function maakBeleg(string $belegNaam, float $belegPrijs)
+    {
+        $dbh = new PDO(DBConfig::$DB_CONN, DBConfig::$DB_USER, DBConfig::$DB_PASS);
+        $sql = "INSERT INTO beleg(belegNaam, belegPrijs) VALUES(:belegNaam, :belegPrijs);";
+        $smt = $dbh->prepare($sql);
+        $smt->execute([
+            ":belegNaam" => $belegNaam,
+            ":belegPrijs" => $belegPrijs,
+        ]);
+        $dbh = null;
+    }
     // read
     public function getAllBelegs(): array
     {
@@ -14,11 +25,14 @@ class BelegDAO
         $sql = "SELECT * FROM beleg;";
         $resultSet = $dbh->query($sql);
         foreach ($resultSet as $result) {
+
             $beleg = new Beleg(
-                $result["belegId"],
+                intval($result["belegId"]),
                 $result["belegNaam"],
-                $result["belegPrijs"],
+                floatval($result["belegPrijs"]),
             );
+
+
             array_push($belegs, $beleg);
         }
         $dbh = null;

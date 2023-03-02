@@ -21,20 +21,21 @@ class CursistDAO
     // read
     public function getAllCursisten(): array
     {
-        $cursisten = array();
+        $overzicht = array();
         $dbh = new PDO(DBConfig::$DB_CONN, DBConfig::$DB_USER, DBConfig::$DB_PASS);
-        $sql = "SELECT * FROM cursist;";
+        $sql = "SELECT cursist.cursistId, email, wachtwoord, count(bestellingId) FROM cursist LEFT JOIN bestelling ON (cursist.cursistId = bestelling.cursistId) GROUP BY cursist.cursistId;";
         $resultaatSet = $dbh->query($sql);
         foreach ($resultaatSet as $resultaat) {
-            $cursist = new Cursist(
-                $resultaat["cursistId"],
-                $resultaat["email"],
-                $resultaat["wachtwoord"]
+            $overzichtsLijn = array(
+                "cursistId" =>    $resultaat["cursistId"],
+                "email" =>    $resultaat["email"],
+                "wachtwoord" =>     $resultaat["wachtwoord"],
+                "aantal bestellingen" =>     $resultaat["count(bestellingId)"]
             );
-            array_push($cursisten, $cursist);
+            array_push($overzicht, $overzichtsLijn);
         }
         $dbh = null;
-        return $cursisten;
+        return $overzicht;
     }
     public function getCursistOpId(int $id): ?Cursist
     {
@@ -66,7 +67,7 @@ class CursistDAO
         $dbh = null;
         $resultaat = $smtm->fetch(PDO::FETCH_ASSOC);
         $cursistId = !empty($resultaat) ? $resultaat["cursistId"] : 0;
-        return $cursistId;
+        return intval($cursistId);
     }
     public function getCursistOpEmail(string $email): ?Cursist
     {

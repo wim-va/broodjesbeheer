@@ -6,6 +6,17 @@ require_once("DBConfig.php");
 class SausDAO
 {
     // create
+    public function maakSaus(string $sausNaam, float $sausPrijs)
+    {
+        $dbh = new PDO(DBConfig::$DB_CONN, DBConfig::$DB_USER, DBConfig::$DB_PASS);
+        $sql = "INSERT INTO saus(sausNaam, sausPrijs) VALUES(:sausNaam, :sausPrijs);";
+        $smt = $dbh->prepare($sql);
+        $smt->execute([
+            ":sausNaam" => $sausNaam,
+            ":sausPrijs" => $sausPrijs,
+        ]);
+        $dbh = null;
+    }
     // read
     public function getAllSauzen(): array
     {
@@ -15,9 +26,9 @@ class SausDAO
         $resultSet = $dbh->query($sql);
         foreach ($resultSet as $result) {
             $saus = new Saus(
-                $result["sausId"],
+                intval($result["sausId"]),
                 $result["sausNaam"],
-                $result["sausPrijs"],
+                floatval($result["sausPrijs"]),
             );
             array_push($sauzen, $saus);
         }

@@ -6,6 +6,17 @@ require_once("DBConfig.php");
 class SoortDAO
 {
     // create
+    public function maakSoort(string $soortNaam, float $soortPrijs)
+    {
+        $dbh = new PDO(DBConfig::$DB_CONN, DBConfig::$DB_USER, DBConfig::$DB_PASS);
+        $sql = "INSERT INTO soort(soortNaam, soortPrijs) VALUES(:soortNaam, :soortPrijs);";
+        $smt = $dbh->prepare($sql);
+        $smt->execute([
+            ":soortNaam" => $soortNaam,
+            ":soortPrijs" => $soortPrijs,
+        ]);
+        $dbh = null;
+    }
     // read
     public function getAllSoorten(): array
     {
@@ -15,9 +26,9 @@ class SoortDAO
         $resultSet = $dbh->query($sql);
         foreach ($resultSet as $result) {
             $soort = new Soort(
-                $result["soortId"],
+                intval($result["soortId"]),
                 $result["soortNaam"],
-                $result["soortPrijs"],
+                floatval($result["soortPrijs"]),
             );
             array_push($soorten, $soort);
         }

@@ -1,22 +1,32 @@
 <?php
 
 declare(strict_types=1);
-spl_autoload_register();
 session_start();
-require_once "Business/CursistBeheer.php";
-$titel = "Broodje App - Log In";
-if (isset($_POST["user"])) {
-    $email = $_POST["user"];
-    $wachtwoord = $_POST["pass"];
+
+require_once("Business/BelegBeheer.php");
+require_once("Business/FormaatBeheer.php");
+require_once("Business/SausBeheer.php");
+require_once("Business/SoortBeheer.php");
+require_once("Business/CursistBeheer.php");
+require_once("Business/BestellingBeheer.php");
+
+if (!empty($_POST["user"])) {
+
     $cursistBeheer = new CursistBeheer();
-    $cursistId = $cursistBeheer->haalCursistId($email, $wachtwoord);
-    if (!empty($cursistId)) {
+    $cursistId = $cursistBeheer->haalCursistId($_POST["user"], $_POST["pass"]);
+    if ($cursistId > 0) {
         $_SESSION["cursistId"] = $cursistId;
-        unset($_SESSION["error"]);
-        header("location: broodje.php");
+        header("location: bestelling.php");
+        echo "succes";
     } else {
-        $_SESSION["error"] = "Onjuiste combinatie email/wachtwoord.";
-        header('location: .');
+        $_SESSION["error"] = "Onjuiste combinatie e-mail / paswoord";
+        echo "fail";
     }
 }
-include "Presentation/login.php";
+
+
+
+
+
+
+include("Presentation/login.php");

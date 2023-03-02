@@ -10,12 +10,14 @@ class CursistBeheer
         $cursistDAO->maakCursist($email);
     }
     // read
-    public function haalCursisten(): array
+    // tijdelijke uitbreiding portfolio
+    public function haalAlleCursisten(): array
     {
         $cursistDAO = new CursistDAO();
         $cursisten = $cursistDAO->getAllCursisten();
         return $cursisten;
     }
+    // tijdelijke uitbreiding portfolio
     public function haalCursistOpId(int $cursistId): ?Cursist
     {
         $cursistDAO = new CursistDAO();

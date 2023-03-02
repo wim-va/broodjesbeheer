@@ -19,7 +19,7 @@
             <h1>Overzicht bestelling</h1>
             <?php
             if (isset($_SESSION["cursistId"])) {
-                if (isset($bestelling)) {
+                if (isset($bestellingLijst)) {
             ?>
             <div class="main-area__form main-area__overzicht" action="broodje.php" method="POST">
                 <table class="main-area__tabel main-area__tabel--overzicht">
@@ -30,20 +30,35 @@
                             <th>saus</th>
                             <th>brood</th>
                             <th>prijs</th>
+                            <th>verwijder</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($bestelling as $naam => $broodje) { ?>
+                        <?php foreach ($bestellingLijst as $bestelling) { ?>
                         <tr>
-                            <td><?= $broodje["beleg"]; ?></td>
-                            <td><?= $broodje["formaat"]; ?></td>
-                            <td><?= $broodje["saus"]; ?></td>
-                            <td><?= $broodje["soort"]; ?></td>
-                            <td>€ <?= number_format($broodje["som"], 2); ?></td>
                             <td>
-                                <a href="bestelling.php?broodje=<?= $broodje["id"]; ?>">Verwijder broodje</a>
+                                <?= $belegLijst[$bestelling->getBelegId() - 1]->getNaam(); ?>
+                            </td>
+                            <td>
+                                <?= $formaatLijst[$bestelling->getFormaatId() - 1]->getNaam(); ?>
+                            </td>
+                            <td>
+                                <?= $sausLijst[$bestelling->getSausId() - 1]->getNaam(); ?>
+                            </td>
+                            <td>
+                                <?= $soortLijst[$bestelling->getSoortId() - 1]->getNaam(); ?>
+                            </td>
+                            <td>
+                                <?= $belegLijst[$bestelling->getBelegId() - 1]->getPrijs() +
+                                                $formaatLijst[$bestelling->getFormaatId() - 1]->getPrijs() +
+                                                $sausLijst[$bestelling->getSausId() - 1]->getPrijs() +
+                                                $soortLijst[$bestelling->getSoortId() - 1]->getPrijs(); ?>
+                            </td>
+                            <td>
+                                <a href="/bestelling.php?verwijder=<?= $bestelling->getId(); ?>">verwijder broodje</a>
                             </td>
                         </tr>
+
                         <?php } ?>
                     </tbody>
                 </table>

@@ -6,14 +6,18 @@ require_once("DBConfig.php");
 class BestellingDAO
 {
     // create
-    public function plaatsNieuweBestelling(int $broodjeId, int $cursistId): void
+    public function maakBestelling(int $belegId, int $formaatId, int $sausId, int $soortId, int $cursistId)
     {
         $bestellingDatum = $this->getDate();
         $dbh = new PDO(DBConfig::$DB_CONN, DBConfig::$DB_USER, DBConfig::$DB_PASS);
-        $sql = "INSERT INTO bestelling(broodjeId, cursistId, bestellingDatum) VALUES(:broodjeId, :cursistId, :bestellingDatum);";
+        $sql = "INSERT INTO bestelling (belegId, formaatId, sausId, soortId, cursistId, bestellingDatum) 
+        VALUES(:belegId, :formaatId, :sausId, :soortId, :cursistId, :bestellingDatum);";
         $smt = $dbh->prepare($sql);
         $smt->execute([
-            ":broodjeId" => $broodjeId,
+            ":belegId" => $belegId,
+            ":formaatId" => $formaatId,
+            ":sausId" => $sausId,
+            ":soortId" => $soortId,
             ":cursistId" => $cursistId,
             ":bestellingDatum" => $bestellingDatum,
         ]);
@@ -29,9 +33,12 @@ class BestellingDAO
         foreach ($resultSet as $result) {
             $bestelling = new Bestelling(
                 $result["bestellingId"],
-                $result["broodjeId"],
+                $result["belegId"],
+                $result["formaatId"],
+                $result["sausId"],
+                $result["soortId"],
                 $result["cursistId"],
-                $result["bestellingDatum"],
+                $result["bestellingDatum"]
             );
             array_push($bestellingen, $bestelling);
         }
@@ -49,9 +56,12 @@ class BestellingDAO
         if (!empty($result)) {
             $bestelling = new Bestelling(
                 $result["bestellingId"],
-                $result["broodjeId"],
+                $result["belegId"],
+                $result["formaatId"],
+                $result["sausId"],
+                $result["soortId"],
                 $result["cursistId"],
-                $result["bestellingDatum"],
+                $result["bestellingDatum"]
             );
             return $bestelling;
         } else {
@@ -66,16 +76,19 @@ class BestellingDAO
         $smt = $dbh->prepare($sql);
         $smt->execute([":cursistId" => $cursistId]);
         $dbh = null;
-        $result = $smt->fetchAll(PDO::FETCH_ASSOC);
+        $resultSet = $smt->fetchAll(PDO::FETCH_ASSOC);
         if (!empty($resultSet)) {
             foreach ($resultSet as $result) {
                 $bestelling = new Bestelling(
                     $result["bestellingId"],
-                    $result["broodjeId"],
+                    $result["belegId"],
+                    $result["formaatId"],
+                    $result["sausId"],
+                    $result["soortId"],
                     $result["cursistId"],
-                    $result["bestellingDatum"],
+                    $result["bestellingDatum"]
                 );
-                array_push($resultSet, $result);
+                array_push($cursistBestellingen, $bestelling);
             }
             return $cursistBestellingen;
         } else {
@@ -95,13 +108,50 @@ class BestellingDAO
             foreach ($resultSet as $result) {
                 $bestelling = new Bestelling(
                     $result["bestellingId"],
-                    $result["broodjeId"],
+                    $result["belegId"],
+                    $result["formaatId"],
+                    $result["sausId"],
+                    $result["soortId"],
                     $result["cursistId"],
-                    $result["bestellingDatum"],
+                    $result["bestellingDatum"]
                 );
-                array_push($resultSet, $result);
+                array_push($cursistBestellingen, $bestelling);
             }
             return $cursistBestellingen;
+        } else {
+            return null;
+        }
+    }
+    public function getIdBestelling(
+        int $belegId,
+        int $formaatId,
+        int $sausId,
+        int $soortId,
+        int $cursistId,
+        int $bestellingDatum,
+    ): ?Bestelling {
+        $dbh = new PDO(DBConfig::$DB_CONN, DBConfig::$DB_USER, DBConfig::$DB_PASS);
+        $sql = "SELECT * FROM bestelling WHERE belegId = :belegId AND formaatId = :formaatId AND sausId = :sausId AND soortId = :soortId;";
+        $smt = $dbh->prepare($sql);
+        $smt->execute([
+            ":belegId" => $belegId,
+            ":formaatId" => $formaatId,
+            ":sausId" => $sausId,
+            ":soortId" => $soortId,
+        ]);
+        $result = $smt->fetch(PDO::FETCH_ASSOC);
+        $dbh = null;
+        if (!empty($result)) {
+            $bestelling = new Bestelling(
+                $result["bestellingId"],
+                $result["belegId"],
+                $result["formaatId"],
+                $result["sausId"],
+                $result["soortId"],
+                $result["cursistId"],
+                $result["bestellingDatum"]
+            );
+            return $bestelling;
         } else {
             return null;
         }
@@ -139,7 +189,7 @@ class BestellingDAO
         $jaar = $datum["year"];
         $maand = $datum["mon"] < 10 ? "0" . $datum["mon"] : $datum["mon"];
         $dag = $datum["mday"] < 10 ? "0" . $datum["mday"] : $datum["mday"];
-        $datum = "'" . $jaar . "/" . $maand . "/" . $dag . "'";
+        $datum =  $jaar . "/" . $maand . "/" . $dag;
         return $datum;
     }
 }

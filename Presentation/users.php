@@ -13,6 +13,8 @@
 </head>
 
 <body>
+    <?php include("partials.php");
+    ?>
     <h1>User Data</h1>
     <table>
         <thead>
@@ -26,14 +28,10 @@
         <tbody>
             <?php foreach ($users as $user) { ?>
             <tr>
-                <td><?= $user[0]; ?></td>
-                <td><?= $user[1]; ?></td>
-                <td><?= $user[2]; ?></td>
-                <td><?= $user[3]; ?></td>
-                <td><?= $user[0]; ?></td>
-                <td><?= $user[1]; ?></td>
-                <td><?= $user[2]; ?></td>
-                <td><?= $user[3]; ?></td>
+                <td><?= $user["cursistId"]; ?></td>
+                <td><?= $user["email"]; ?></td>
+                <td><?= $user["wachtwoord"]; ?></td>
+                <td style="text-align: center;"><?= $user["aantal bestellingen"]; ?></td>
             </tr>
             <?php } ?>
             <?php

@@ -5,13 +5,13 @@ require_once("Data/BestellingDAO.php");
 class BestellingBeheer
 {
     // create
-    public function plaatsBestelling(int $broodjeId, int $cursistId): void
+    public function plaatsBestelling(int $belegId, int $formaatId, int $sausId, int $soortId, int $cursistId): void
     {
         $bestellingDAO = new BestellingDAO();
-        $bestellingDAO->plaatsNieuweBestelling($broodjeId, $cursistId);
+        $bestellingDAO->maakBestelling($belegId, $formaatId, $sausId, $soortId, $cursistId);
     }
     // read
-    public function haalBestellingen(): array
+    public function haalAlleBestellingen(): array
     {
         $bestellingDAO = new BestellingDAO();
         $bestellingen = $bestellingDAO->getAllBestellingen();

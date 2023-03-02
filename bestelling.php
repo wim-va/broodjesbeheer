@@ -1,31 +1,42 @@
 <?php
 
 declare(strict_types=1);
-spl_autoload_register();
 session_start();
-$titel = "Broodje App - Besteloverzicht";
-$bericht = "";
-require_once "Business/BestellingBeheer.php";
-require_once "Business/BelegBeheer.php";
-require_once "Business/BroodjeBeheer.php";
-require_once "Business/CursistBeheer.php";
-require_once "Business/FormaatBeheer.php";
-require_once "Business/SausBeheer.php";
-require_once "Business/SoortBeheer.php";
+
+// algemeen gedeelte
+require_once("Business/BelegBeheer.php");
+require_once("Business/FormaatBeheer.php");
+require_once("Business/SausBeheer.php");
+require_once("Business/SoortBeheer.php");
+require_once("Business/BestellingBeheer.php");
+
 if (isset($_SESSION["cursistId"])) {
+    $bericht = "";
     $cursistId = intval($_SESSION["cursistId"]);
+
+    $belegBeheer = new BelegBeheer();
+    $belegLijst = $belegBeheer->haalAlleBeleg();
+
+    $formaatBeheer = new FormaatBeheer();
+    $formaatLijst = $formaatBeheer->haalAlleFormaten();
+
+    $sausBeheer = new SausBeheer();
+    $sausLijst = $sausBeheer->haalAlleSauzen();
+
+    $soortBeheer = new SoortBeheer();
+    $soortLijst = $soortBeheer->haalAlleSoorten();
+
     $bestellingBeheer = new BestellingBeheer();
-    $bestelling = $bestellingBeheer->haalBestellingenOpCursist($cursistId);
-    if (empty($bestelling)) {
-        $bericht = "U heeft geen openstaande bestelling.";
+
+    $bestellingBeheer = new BestellingBeheer();
+    $bestellingLijst = $bestellingBeheer->haalBestellingenOpCursist($cursistId);
+    if (empty($bestellingLijst)) {
+        $bericht = "U heeft geen bestellingen";
     }
 }
-if (isset($_GET["broodje"])) {
-    header("Refresh:1");
-    // header("location: bestelling.php");
-    $bestellingBeheer = new BestellingBeheer();
-    $bestellingBeheer->verwijderBestelling($_GET["broodje"]);
-    $bericht = "Bestelling is verwijderd";
-    header('location: bestelling.php');
+
+if (isset($_GET["verwijder"])) {
+    $bestellingBeheer->verwijderBestelling(intval($_GET["verwijder"]));
 }
-include "Presentation/bestelling.php";
+
+include("Presentation/bestelling.php");
